@@ -52,6 +52,9 @@
         android:name="com.codingwithjadrey.pasman.ui.update.UpdatePasswordFragment"
         android:label="UpdatePasswordFragment"
         tools:layout="@layout/fragment_update_password">
+        <argument
+            android:name="currentPassword"
+            app:argType="com.codingwithjadrey.pasman.data.entity.Pas" />
         <action
             android:id="@+id/action_updatePasswordFragment_to_generatePasswordFragment"
             app:destination="@id/generatePasswordFragment" />
