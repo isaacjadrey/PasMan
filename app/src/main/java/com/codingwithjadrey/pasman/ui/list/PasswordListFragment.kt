@@ -5,9 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.codingwithjadrey.pasman.R
 import com.codingwithjadrey.pasman.databinding.FragmentPasswordListBinding
+import com.codingwithjadrey.pasman.ui.viewmodel.PasViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 
 /**
  * MIT License
@@ -33,10 +38,13 @@ import com.codingwithjadrey.pasman.databinding.FragmentPasswordListBinding
  * SOFTWARE.
  */
 
+@AndroidEntryPoint
 class PasswordListFragment: Fragment() {
 
     private var _binding: FragmentPasswordListBinding? = null
     private val binding get() = _binding!!
+    private val passwordViewModel: PasViewModel by viewModels()
+    private val adapter: PasswordAdapter by lazy { PasswordAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,13 +58,17 @@ class PasswordListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = passwordViewModel
             addButton.setOnClickListener {
                 findNavController().navigate(R.id.action_passwordListFragment_to_addPasswordFragment)
             }
         }
         setMenuItems()
+        getPasswords()
     }
 
+    /** Sets up the options menu and its actions */
     private fun setMenuItems() {
         binding.apply {
             toolbarPasList.setOnMenuItemClickListener { item ->
@@ -73,6 +85,19 @@ class PasswordListFragment: Fragment() {
         }
     }
 
+    /** lists the items from the database into the recycler view */
+    private fun getPasswords() {
+        binding.apply {
+            passwordRecycler.adapter = adapter
+            passwordRecycler.layoutManager = LinearLayoutManager(requireContext())
+        }
+        passwordViewModel.allPasswords.observe(viewLifecycleOwner) { passwords ->
+            passwordViewModel.checkPasswordsIfEmpty(passwords)
+            adapter.submitList(passwords)
+        }
+    }
+
+    /** called when the view is destroyed */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

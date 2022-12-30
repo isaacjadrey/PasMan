@@ -1,8 +1,6 @@
 package com.codingwithjadrey.pasman.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.codingwithjadrey.pasman.data.entity.Pas
 import com.codingwithjadrey.pasman.data.repo.PasRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +34,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PasViewModel @Inject constructor(private val repository: PasRepository) : ViewModel(){
+
+    private val _noPasswords: MutableLiveData<Boolean> = MutableLiveData(true)
+    val noPasswords: LiveData<Boolean> get() = _noPasswords
+    private val _noSuchPasswords: MutableLiveData<Boolean> = MutableLiveData(false)
+    val noSuchPasswords: LiveData<Boolean> get() = _noSuchPasswords
+
+    /** checks if there are passwords in the database or not */
+    fun checkPasswordsIfEmpty(passwords: List<Pas>) {
+        _noPasswords.value = passwords.isEmpty()
+    }
+
+    /** checks whether that particular password exists in the database*/
+    fun checkIfPasswordExists(passwords: List<Pas>) {
+        _noSuchPasswords.value = passwords.isEmpty()
+    }
 
     /** validates text input fields whether they are empty or not */
     fun validateInputs(account: String, password: String, accountName: String): Boolean {
