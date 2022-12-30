@@ -15,6 +15,7 @@ import com.codingwithjadrey.pasman.databinding.FragmentPasswordListBinding
 import com.codingwithjadrey.pasman.ui.viewmodel.PasViewModel
 import com.codingwithjadrey.pasman.util.AlertHelper
 import com.codingwithjadrey.pasman.util.makeToast
+import com.codingwithjadrey.pasman.util.searchItems
 import com.codingwithjadrey.pasman.util.swipeToDeleteItem
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
@@ -75,6 +76,7 @@ class PasswordListFragment: Fragment() {
         }
         setMenuItems()
         getPasswords()
+        searchPassword()
     }
 
     /** Sets up the options menu and its actions */
@@ -157,8 +159,22 @@ class PasswordListFragment: Fragment() {
         }
     }
 
-    private fun confirmDeletion() {
+    /** method that performs search in the database */
+    private fun searchPassword() {
+        binding.searchBar.searchItems {
+            searchQuery(it)
+        }
+    }
 
+    /** the actual search functionality method using the search query */
+    private fun searchQuery(query: String) {
+        val searchQuery = "%$query%"
+        passwordViewModel.searchPassword(searchQuery).observe(viewLifecycleOwner) { list ->
+            list.let {
+                passwordViewModel.checkIfPasswordExists(list)
+                adapter.submitList(list)
+            }
+        }
     }
 
     /** called when the view is destroyed */
