@@ -29,6 +29,23 @@ class PasswordListFragment: Fragment() {
                 findNavController().navigate(R.id.action_passwordListFragment_to_addPasswordFragment)
             }
         }
+        setMenuItems()
+    }
+
+    private fun setMenuItems() {
+        binding.apply {
+            toolbarPasList.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_email_sort -> {true}
+                    R.id.action_social_sort -> {true}
+                    R.id.action_wallet_sort -> {true}
+                    R.id.action_app_sort -> {true}
+                    R.id.action_website_sort -> {true}
+                    R.id.action_delete_all -> {true}
+                    else -> false
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
