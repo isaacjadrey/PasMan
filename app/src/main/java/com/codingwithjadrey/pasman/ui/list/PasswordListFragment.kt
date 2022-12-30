@@ -8,11 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.codingwithjadrey.pasman.R
+import com.codingwithjadrey.pasman.data.entity.Pas
 import com.codingwithjadrey.pasman.databinding.FragmentPasswordListBinding
 import com.codingwithjadrey.pasman.ui.viewmodel.PasViewModel
+import com.codingwithjadrey.pasman.util.AlertHelper
+import com.codingwithjadrey.pasman.util.makeToast
+import com.codingwithjadrey.pasman.util.swipeToDeleteItem
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
+import javax.inject.Inject
 
 /**
  * MIT License
@@ -45,6 +51,9 @@ class PasswordListFragment: Fragment() {
     private val binding get() = _binding!!
     private val passwordViewModel: PasViewModel by viewModels()
     private val adapter: PasswordAdapter by lazy { PasswordAdapter() }
+
+    @Inject
+    lateinit var alertHelper: AlertHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -103,7 +112,13 @@ class PasswordListFragment: Fragment() {
                         }
                         true
                     }
-                    R.id.action_delete_all -> {true}
+                    R.id.action_delete_all -> {
+                        alertHelper.createAlertToDelete(getString(R.string.delete_all_passwords)) {
+                            passwordViewModel.deleteAllPasswords()
+                            makeToast(requireContext(), getString(R.string.all_passwords_deleted))
+                        }
+                        true
+                    }
                     else -> false
                 }
             }
@@ -115,11 +130,35 @@ class PasswordListFragment: Fragment() {
         binding.apply {
             passwordRecycler.adapter = adapter
             passwordRecycler.layoutManager = LinearLayoutManager(requireContext())
+            passwordRecycler.itemAnimator = SlideInDownAnimator().apply { addDuration = 550 }
+            swipeToDelete(passwordRecycler)
         }
         passwordViewModel.allPasswords.observe(viewLifecycleOwner) { passwords ->
             passwordViewModel.checkPasswordsIfEmpty(passwords)
             adapter.submitList(passwords)
         }
+    }
+
+    /** action to delete an item from its position
+     * from the recyclerView by swiping left or right to delete */
+    private fun swipeToDelete(passwordRecycler: RecyclerView) {
+        passwordRecycler.swipeToDeleteItem { passwordItem ->
+            val pasItemToDelete = adapter.currentList[passwordItem.adapterPosition]
+            passwordViewModel.deletePassword(pasItemToDelete)
+            adapter.notifyItemRemoved(passwordItem.adapterPosition)
+            restoreDeletedPasItem(passwordItem.itemView, pasItemToDelete)
+        }
+    }
+
+    /** action invoked to restore a deleted item back into the database */
+    private fun restoreDeletedPasItem(adapterPosition: View, pasItemToRestore: Pas) {
+        alertHelper.restoreSnackBar(adapterPosition, pasItemToRestore.account) {
+            passwordViewModel.insertPassword(pasItemToRestore)
+        }
+    }
+
+    private fun confirmDeletion() {
+
     }
 
     /** called when the view is destroyed */

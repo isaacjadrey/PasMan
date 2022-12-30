@@ -49,7 +49,7 @@
     <string name="are_you_sure_to_delete">Are you sure you want to delete all passwords</string>
     <string name="no">NO</string>
     <string name="yes">YES</string>
-    <string name="confirm_delete_item">Delete password for %s</string>
+    <string name="confirm_delete_item">Deleted password for %s</string>
     <string name="restore_password">Restore Password</string>
     <string name="all_passwords_deleted">All passwords have been deleted</string>
     <string name="current_password">Current Password</string>
