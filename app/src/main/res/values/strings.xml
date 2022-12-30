@@ -1,3 +1,67 @@
 <resources>
     <string name="app_name">PasMan</string>
+    <string name="unlock_application_txt">Unlock application to access your passwords</string>
+    <string name="unlock">Unlock</string>
+    <string name="go_to_add_password_fragment">Go to add password fragment</string>
+    <string name="add_new_password">Add New Password</string>
+    <string name="username_email">Username or Email</string>
+    <string name="account_name">Account name, app or website</string>
+    <string name="password">Password</string>
+    <string name="account_type">Choose Password Type</string>
+    <string name="update_account_type">Update Password Type</string>
+    <string name="password_generator">Password Generator</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+
+    <string name="generate_strong_password">Having trouble with that, lets help you generate a strong password</string>
+    <string name="generate">Generate</string>
+    <string name="generated_password">Password</string>
+    <string name="search">Search</string>
+    <string name="sort_by">Sort By</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="social">Social Account</string>
+    <string name="wallet">Wallet</string>
+    <string name="app">App</string>
+    <string name="website">Website</string>
+    <string name="delete_all">Delete All</string>
+    <string name="no_passwords_yet">No passwords yet. Create some to see them here!</string>
+    <string name="no_such_password">That password doesn\'t exist, try search something else!</string>
+    <string name="no_passwords_image">No passwords Image</string>
+    <string name="copy_to_clipboard_image">Copy to clipboard image</string>
+
+    <string name="settings">Settings</string>
+    <string name="create_login_password">Create login password</string>
+    <string name="change_login_password">Change login password</string>
+    <string name="create_your_app_login_password">Create your app login password</string>
+    <string name="change_your_app_login_password">Change your app login password</string>
+    <string name="create_password">Create Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="cancel">Cancel</string>
+    <string name="hint_create_a_password_you_can_easily_remember">Hint: Create a password you can easily remember</string>
+    <string name="login_with_your_credentials">Login with your credentials</string>
+    <string name="enter_password">Enter password</string>
+    <string name="login">Login</string>
+    <string name="use_biometric_login">Use Biometric Login</string>
+
+    <string name="delete_all_passwords">Delete all passwords</string>
+    <string name="are_you_sure_to_delete">Are you sure you want to delete all passwords</string>
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
+    <string name="confirm_delete_item">Delete password for %s</string>
+    <string name="restore_password">Restore Password</string>
+    <string name="all_passwords_deleted">All passwords have been deleted</string>
+    <string name="restore_all_password">Restore all passwords %s</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="about_app">About</string>
+
+    <string-array name="account_type_spinner">
+        <item>Email</item>
+        <item>Social Account</item>
+        <item>Wallet</item>
+        <item>App</item>
+        <item>Website</item>
+    </string-array>
 </resources>

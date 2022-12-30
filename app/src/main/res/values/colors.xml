@@ -7,4 +7,20 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="hint_color">#757575</color>
+
+    <color name="background">@color/white</color>
+    <color name="fab_icon_background">@color/black</color>
+    <color name="text_color">@color/black</color>
+    <color name="text_color_hint">@color/hint_color</color>
+    <color name="text_color_on_button">@color/white</color>
+    <color name="image_color">@color/black</color>
+    <color name="button_color">@color/black</color>
+    <color name="fab_icon_color_tint">@color/white</color>
+    <color name="logo_color">@color/black</color>
+    <color name="unselected_text">#BDBDBD</color>
+    <color name="selected_text">#757575</color>
+    <color name="selected_icon">#757575</color>
+    <color name="unselected_icon">#BDBDBD</color>
+    <color name="card_color">#FF424242</color>
 </resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">@color/black</color>
+    <color name="fab_icon_background">@color/white</color>
+    <color name="text_color">@color/white</color>
+    <color name="text_color_hint">@color/hint_color</color>
+    <color name="text_color_on_button">@color/black</color>
+    <color name="image_color">@color/white</color>
+    <color name="button_color">@color/white</color>
+    <color name="fab_icon_color_tint">@color/black</color>
+    <color name="logo_color">@color/white</color>
+    <color name="unselected_text">#9E9E9E</color>
+    <color name="selected_text">@color/white</color>
+    <color name="selected_icon">@color/white</color>
+    <color name="unselected_icon">#9E9E9E</color>
+    <color name="card_color">#FF424242</color>
+</resources>
