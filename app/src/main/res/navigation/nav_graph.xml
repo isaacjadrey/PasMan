@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/passwordListFragment">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.codingwithjadrey.pasman.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/passwordListFragment"
+        android:name="com.codingwithjadrey.pasman.PasswordListFragment"
+        android:label="PasswordListFragment"
+        tools:layout="@layout/fragment_password_list" >
+        <action
+            android:id="@+id/action_passwordListFragment_to_addPasswordFragment"
+            app:destination="@id/addPasswordFragment" />
+        <action
+            android:id="@+id/action_passwordListFragment_to_updatePasswordFragment"
+            app:destination="@id/updatePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPasswordFragment"
+        android:name="com.codingwithjadrey.pasman.AddPasswordFragment"
+        android:label="AddPasswordFragment"
+        tools:layout="@layout/fragment_add_password" >
+        <action
+            android:id="@+id/action_addPasswordFragment_to_generatePasswordFragment"
+            app:destination="@id/generatePasswordFragment" />
+        <action
+            android:id="@+id/action_addPasswordFragment_to_passwordListFragment"
+            app:destination="@id/passwordListFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/generatePasswordFragment"
+        android:name="com.codingwithjadrey.pasman.GeneratePasswordFragment"
+        android:label="GeneratePasswordFragment"
+        tools:layout="@layout/fragment_generate_password" />
+    <dialog
+        android:id="@+id/updatePasswordFragment"
+        android:name="com.codingwithjadrey.pasman.UpdatePasswordFragment"
+        android:label="UpdatePasswordFragment"
+        tools:layout="@layout/fragment_update_password" >
+        <action
+            android:id="@+id/action_updatePasswordFragment_to_generatePasswordFragment"
+            app:destination="@id/generatePasswordFragment" />
+    </dialog>
+</navigation>
