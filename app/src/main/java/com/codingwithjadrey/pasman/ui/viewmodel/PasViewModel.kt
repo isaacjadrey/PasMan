@@ -13,6 +13,11 @@ import javax.inject.Inject
 @HiltViewModel
 class PasViewModel @Inject constructor(private val repository: PasRepository) : ViewModel(){
 
+    /** validates text input fields whether they are empty or not */
+    fun validateInputs(account: String, password: String, accountName: String): Boolean {
+        return !(account.isEmpty() || password.isEmpty() || accountName.isEmpty())
+    }
+
     // actual action to get all passwords from the database using the repository
     val allPasswords = repository.pasFlow.asLiveData()
     // actual action to sort items by email from the database using the repository
