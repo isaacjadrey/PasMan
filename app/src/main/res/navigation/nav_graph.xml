@@ -7,12 +7,12 @@
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.codingwithjadrey.pasman.MainActivity"
+        android:name="com.codingwithjadrey.pasman.ui.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/passwordListFragment"
-        android:name="com.codingwithjadrey.pasman.PasswordListFragment"
+        android:name="com.codingwithjadrey.pasman.ui.list.PasswordListFragment"
         android:label="PasswordListFragment"
         tools:layout="@layout/fragment_password_list" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/addPasswordFragment"
-        android:name="com.codingwithjadrey.pasman.AddPasswordFragment"
+        android:name="com.codingwithjadrey.pasman.ui.add.AddPasswordFragment"
         android:label="AddPasswordFragment"
         tools:layout="@layout/fragment_add_password" >
         <action
@@ -36,12 +36,12 @@
     </fragment>
     <dialog
         android:id="@+id/generatePasswordFragment"
-        android:name="com.codingwithjadrey.pasman.GeneratePasswordFragment"
+        android:name="com.codingwithjadrey.pasman.ui.generate.GeneratePasswordFragment"
         android:label="GeneratePasswordFragment"
         tools:layout="@layout/fragment_generate_password" />
     <dialog
         android:id="@+id/updatePasswordFragment"
-        android:name="com.codingwithjadrey.pasman.UpdatePasswordFragment"
+        android:name="com.codingwithjadrey.pasman.ui.update.UpdatePasswordFragment"
         android:label="UpdatePasswordFragment"
         tools:layout="@layout/fragment_update_password" >
         <action

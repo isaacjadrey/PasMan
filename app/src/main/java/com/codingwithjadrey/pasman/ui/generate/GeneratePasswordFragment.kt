@@ -1,4 +1,4 @@
-package com.codingwithjadrey.pasman
+package com.codingwithjadrey.pasman.ui.generate
 
 import android.os.Bundle
 import android.view.LayoutInflater
