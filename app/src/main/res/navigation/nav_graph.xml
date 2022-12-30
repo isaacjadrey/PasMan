@@ -14,10 +14,14 @@
         android:id="@+id/passwordListFragment"
         android:name="com.codingwithjadrey.pasman.ui.list.PasswordListFragment"
         android:label="PasswordListFragment"
-        tools:layout="@layout/fragment_password_list" >
+        tools:layout="@layout/fragment_password_list">
         <action
             android:id="@+id/action_passwordListFragment_to_addPasswordFragment"
-            app:destination="@id/addPasswordFragment" />
+            app:destination="@id/addPasswordFragment"
+            app:enterAnim="@anim/animate_from_right"
+            app:exitAnim="@anim/animate_to_left"
+            app:popEnterAnim="@anim/animate_from_left"
+            app:popExitAnim="@anim/animate_to_right" />
         <action
             android:id="@+id/action_passwordListFragment_to_updatePasswordFragment"
             app:destination="@id/updatePasswordFragment" />
@@ -26,13 +30,17 @@
         android:id="@+id/addPasswordFragment"
         android:name="com.codingwithjadrey.pasman.ui.add.AddPasswordFragment"
         android:label="AddPasswordFragment"
-        tools:layout="@layout/fragment_add_password" >
+        tools:layout="@layout/fragment_add_password">
         <action
             android:id="@+id/action_addPasswordFragment_to_generatePasswordFragment"
             app:destination="@id/generatePasswordFragment" />
         <action
             android:id="@+id/action_addPasswordFragment_to_passwordListFragment"
-            app:destination="@id/passwordListFragment" />
+            app:destination="@id/passwordListFragment"
+            app:enterAnim="@anim/animate_from_left"
+            app:exitAnim="@anim/animate_to_right"
+            app:popEnterAnim="@anim/animate_from_right"
+            app:popExitAnim="@anim/animate_to_left" />
     </fragment>
     <dialog
         android:id="@+id/generatePasswordFragment"
@@ -43,7 +51,7 @@
         android:id="@+id/updatePasswordFragment"
         android:name="com.codingwithjadrey.pasman.ui.update.UpdatePasswordFragment"
         android:label="UpdatePasswordFragment"
-        tools:layout="@layout/fragment_update_password" >
+        tools:layout="@layout/fragment_update_password">
         <action
             android:id="@+id/action_updatePasswordFragment_to_generatePasswordFragment"
             app:destination="@id/generatePasswordFragment" />
