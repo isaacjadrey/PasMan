@@ -52,8 +52,7 @@
     <string name="confirm_delete_item">Deleted password for %s</string>
     <string name="restore_password">Restore Password</string>
     <string name="all_passwords_deleted">All passwords have been deleted</string>
-    <string name="current_password">Current Password</string>
-    <string name="new_password">New Password</string>
+    <string name="new_password">Enter new password</string>
     <string name="about_app">About</string>
 
     <string-array name="account_type_spinner">
