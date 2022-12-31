@@ -25,6 +25,13 @@
         <action
             android:id="@+id/action_passwordListFragment_to_updatePasswordFragment"
             app:destination="@id/updatePasswordFragment" />
+        <action
+            android:id="@+id/action_passwordListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/animate_from_right"
+            app:exitAnim="@anim/animate_to_left"
+            app:popEnterAnim="@anim/animate_from_left"
+            app:popExitAnim="@anim/animate_to_right"/>
     </fragment>
     <fragment
         android:id="@+id/addPasswordFragment"
@@ -59,4 +66,9 @@
             android:id="@+id/action_updatePasswordFragment_to_generatePasswordFragment"
             app:destination="@id/generatePasswordFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/settingsFragment"
+        tools:layout="@layout/fragment_settings"
+        android:name="com.codingwithjadrey.pasman.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

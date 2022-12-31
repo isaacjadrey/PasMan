@@ -46,7 +46,7 @@ import javax.inject.Inject
  */
 
 @AndroidEntryPoint
-class PasswordListFragment: Fragment() {
+class PasswordListFragment : Fragment() {
 
     private var _binding: FragmentPasswordListBinding? = null
     private val binding get() = _binding!!
@@ -119,6 +119,10 @@ class PasswordListFragment: Fragment() {
                             passwordViewModel.deleteAllPasswords()
                             makeToast(requireContext(), getString(R.string.all_passwords_deleted))
                         }
+                        true
+                    }
+                    R.id.action_settings -> {
+                        findNavController().navigate(PasswordListFragmentDirections.actionPasswordListFragmentToSettingsFragment())
                         true
                     }
                     else -> false
