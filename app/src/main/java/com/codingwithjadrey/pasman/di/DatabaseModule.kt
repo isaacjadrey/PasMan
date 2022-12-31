@@ -24,4 +24,8 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun providePasDao(database: PasDatabase) = database.pasDao
+
+    @Singleton
+    @Provides
+    fun provideUserDao(database: PasDatabase) = database.userDao
 }
