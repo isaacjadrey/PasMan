@@ -6,7 +6,8 @@ import com.codingwithjadrey.pasman.data.repo.UserRepository
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
-class UserViewModelFactory @Inject constructor(private val repository: UserRepository) : ViewModelProvider.Factory {
+class UserViewModelFactory @Inject constructor(private val repository: UserRepository) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return UserViewModel(repository) as T
     }

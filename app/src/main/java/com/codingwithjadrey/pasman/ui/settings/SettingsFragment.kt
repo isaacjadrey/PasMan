@@ -8,16 +8,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.codingwithjadrey.pasman.BuildConfig
+import com.codingwithjadrey.pasman.data.entity.User
+import com.codingwithjadrey.pasman.databinding.CreatePasswordLayoutBinding
 import com.codingwithjadrey.pasman.databinding.FragmentSettingsBinding
+import com.codingwithjadrey.pasman.ui.viewmodel.UserViewModel
+import com.codingwithjadrey.pasman.util.makeToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private lateinit var dialog: Dialog
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +50,24 @@ class SettingsFragment : Fragment() {
     }
 
     private fun createPasswordDialog() {
-
+        val dialogBinding = CreatePasswordLayoutBinding.inflate(layoutInflater)
+        dialog.setContentView(dialogBinding.root)
+        dialog.setCancelable(false)
+        dialogBinding.apply {
+            cancelButton.setOnClickListener { dialog.dismiss() }
+            createPasswordBtn.setOnClickListener {
+                val passwordText = createPasswordTxt.text.toString()
+                if (passwordText.isEmpty()) {
+                    makeToast(requireContext(), "Password is required")
+                } else {
+                    val user = User(1, passwordText)
+                    userViewModel.insertUser(user)
+                    dialog.dismiss()
+                    makeToast(requireContext(), "Login password created successfully.")
+                }
+            }
+        }
+        dialog.show()
     }
 
     private fun changePasswordDialog() {
