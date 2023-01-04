@@ -30,8 +30,8 @@ class UserViewModel @Inject constructor(private val repository: UserRepository) 
     }
 
     /** validates password entries */
-    fun validatePasswords(oldPassword: String, newPassword: String): Boolean {
-        return !(oldPassword.isEmpty() || newPassword.isEmpty())
+    fun validatePasswords(password: String): Boolean {
+        return password.isNotEmpty()
     }
 
     /** actual function to update user in user database */

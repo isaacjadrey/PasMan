@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.codingwithjadrey.pasman.BuildConfig
 import com.codingwithjadrey.pasman.data.entity.User
+import com.codingwithjadrey.pasman.databinding.ChangePasswordLayoutBinding
 import com.codingwithjadrey.pasman.databinding.CreatePasswordLayoutBinding
 import com.codingwithjadrey.pasman.databinding.FragmentSettingsBinding
 import com.codingwithjadrey.pasman.ui.viewmodel.UserViewModel
@@ -49,6 +50,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    /** method to create app login password */
     private fun createPasswordDialog() {
         val dialogBinding = CreatePasswordLayoutBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
@@ -57,23 +59,45 @@ class SettingsFragment : Fragment() {
             cancelButton.setOnClickListener { dialog.dismiss() }
             createPasswordBtn.setOnClickListener {
                 val passwordText = createPasswordTxt.text.toString()
-                if (passwordText.isEmpty()) {
-                    makeToast(requireContext(), "Password is required")
-                } else {
+                // validates the text field using the userViewModel
+                val validate = userViewModel.validatePasswords(passwordText)
+                if (validate) {
                     val user = User(1, passwordText)
+                    // creates a login password
                     userViewModel.insertUser(user)
                     dialog.dismiss()
                     makeToast(requireContext(), "Login password created successfully.")
-                }
+                } else makeToast(requireContext(), "Password is required")
             }
         }
         dialog.show()
     }
 
+    /** method to change app login password */
     private fun changePasswordDialog() {
-
+        val dialogBinding = ChangePasswordLayoutBinding.inflate(layoutInflater)
+        dialogBinding.viewModel = userViewModel
+        dialog.setContentView(dialogBinding.root)
+        dialog.setCancelable(false)
+        dialogBinding.apply {
+            cancelButton.setOnClickListener { dialog.dismiss() }
+            updatePasswordBtn.setOnClickListener {
+                val newPassword = newPassword.text.toString()
+                // validates the text field using the userViewModel
+                val validate = userViewModel.validatePasswords(newPassword)
+                if (validate) {
+                    val user = User(1, newPassword)
+                    // updates the login password
+                    userViewModel.updateUser(user)
+                    dialog.dismiss()
+                    makeToast(requireContext(), "Password updated successfully")
+                } else makeToast(requireContext(), "Please enter new password!")
+            }
+        }
+        dialog.show()
     }
 
+    /** method to delete and reset app login password */
     private fun resetPasswordDialog() {
 
     }
