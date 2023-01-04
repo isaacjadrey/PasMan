@@ -7,10 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.codingwithjadrey.pasman.BuildConfig
+import com.codingwithjadrey.pasman.R
 import com.codingwithjadrey.pasman.data.entity.User
 import com.codingwithjadrey.pasman.databinding.ChangePasswordLayoutBinding
 import com.codingwithjadrey.pasman.databinding.CreatePasswordLayoutBinding
@@ -19,6 +22,7 @@ import com.codingwithjadrey.pasman.ui.viewmodel.UserViewModel
 import com.codingwithjadrey.pasman.util.makeToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executor
 
 /**
  * MIT License
@@ -131,11 +135,45 @@ class SettingsFragment : Fragment() {
             setCancelable(false)
             setNegativeButton("NO") { _, _ -> setOnDismissListener { setCancelable(true) } }
             setPositiveButton("YES") { _, _ ->
-                userViewModel.deleteUser()
+                confirmPasswordDeletion()
             }
         }.show()
     }
 
+    /** Method to authenticate deleting app login password
+     * this prevents any user with access to the phone
+     * from deleting your login password intentionally or accidentally
+     */
+    private fun confirmPasswordDeletion() {
+        val executor: Executor = ContextCompat.getMainExecutor(requireContext())
+        val biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    makeToast(requireContext(), "Failed to delete: $errString")
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    userViewModel.deleteUser()
+                    makeToast(requireContext(), getString(R.string.password_deleted))
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    makeToast(requireContext(), "Authentication Failed, can't delete login password")
+                }
+            })
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Warning! this deletes your app login password")
+            .setSubtitle("Verify fingerprint to delete login password")
+            .setNegativeButtonText("Cancel")
+            .build()
+        biometricPrompt.authenticate(promptInfo)
+    }
+
+    /** shows information about the app */
     private fun infoDialog() {
         val url = "https://github.com/isaacjadrey/PasMan"
         val intent = Intent(Intent.ACTION_VIEW)
@@ -149,7 +187,7 @@ class SettingsFragment : Fragment() {
                         "save all your passwords right on the move." +
                         "\nNo need to forget your passwords anymore." +
                         "\n\nVersion: $versionNumber" +
-                        "\nPowered by COJ"
+                        "\nPowered by CWJ"
             )
             setNeutralButton("Visit Site") { _, _ ->
                 startActivity(intent)
