@@ -8,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.codingwithjadrey.pasman.data.entity.User
 import com.codingwithjadrey.pasman.data.repo.UserRepository
 import com.codingwithjadrey.pasman.util.StateListener
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class UserViewModel @Inject constructor(private val repository: UserRepository) : ViewModel(), Observable {
 
     var stateListener: StateListener? = null
