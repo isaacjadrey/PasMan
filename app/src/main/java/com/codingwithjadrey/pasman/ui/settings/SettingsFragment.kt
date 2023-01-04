@@ -20,6 +20,30 @@ import com.codingwithjadrey.pasman.util.makeToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * MIT License
+ *
+ * Copyright (c) 2022 Isaac Jadrey Ongwara Jr
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
 
@@ -99,7 +123,17 @@ class SettingsFragment : Fragment() {
 
     /** method to delete and reset app login password */
     private fun resetPasswordDialog() {
-
+        val builder = MaterialAlertDialogBuilder(requireContext())
+        builder.apply {
+            setTitle("Warning!")
+            setMessage("Are you sure you want to reset your login password. " +
+                    "This will delete your login credential. ")
+            setCancelable(false)
+            setNegativeButton("NO") { _, _ -> setOnDismissListener { setCancelable(true) } }
+            setPositiveButton("YES") { _, _ ->
+                userViewModel.deleteUser()
+            }
+        }.show()
     }
 
     private fun infoDialog() {
