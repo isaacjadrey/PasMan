@@ -1,0 +1,1 @@
+<img src="/assets/logo_text.png" alt="PasMan">
