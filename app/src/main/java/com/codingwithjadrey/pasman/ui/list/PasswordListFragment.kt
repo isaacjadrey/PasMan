@@ -136,6 +136,8 @@ class PasswordListFragment : Fragment() {
         }
     }
 
+    /** method that requires user authentication to delete
+     * all passwords from the database */
     private fun confirmToDelete() {
         executor = ContextCompat.getMainExecutor(requireContext())
         biometricPrompt = BiometricPrompt(this, executor,

@@ -8,22 +8,29 @@ import android.os.Looper
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.codingwithjadrey.pasman.R
 import com.codingwithjadrey.pasman.databinding.ActivityAuthBinding
+import com.codingwithjadrey.pasman.ui.viewmodel.UserViewModel
+import com.codingwithjadrey.pasman.util.StateListener
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
 
-class AuthActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class AuthActivity : AppCompatActivity(), StateListener {
 
     private lateinit var binding: ActivityAuthBinding
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
+        binding.viewModel = userViewModel
         setContentView(binding.root)
 
         // animator to animate our splash image
@@ -57,6 +64,31 @@ class AuthActivity : AppCompatActivity() {
                         "Authentication Error: $errString",
                         Toast.LENGTH_SHORT
                     ).show()
+                    /** Auto-Transition to Login Layout when authentication is cancelled by user
+                     * or the fingerprint verification fails */
+                    binding.defaultLayout.visibility = View.INVISIBLE
+                    binding.loginLayout.visibility = View.VISIBLE
+                    binding.loginLayout.startAnimation(
+                        AnimationUtils.loadAnimation(
+                            this@AuthActivity,
+                            R.anim.animate_from_right
+                        )
+                    )
+                    /** When "use biometric button" is clicked */
+                    binding.UserBiometric.setOnClickListener {
+                        binding.loginLayout.visibility = View.INVISIBLE
+                        binding.defaultLayout.visibility = View.VISIBLE
+                        binding.defaultLayout.startAnimation(
+                            AnimationUtils.loadAnimation(
+                                this@AuthActivity,
+                                R.anim.animate_from_left
+                            )
+                        )
+                    }
+                    binding.apply {
+                        loginButton.setOnClickListener { viewModel?.loginUser() }
+                    }
+                    userViewModel.stateListener = this@AuthActivity
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -91,6 +123,18 @@ class AuthActivity : AppCompatActivity() {
         biometricLoginBtn.setOnClickListener {
             biometricPrompt.authenticate(promptInfo)
         }
+    }
+
+    /** carried out when the user input matches the login password
+     * in the user database */
+    override fun onSuccess(message: String) {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     /** Option to enable the prompt to appear when the application just launches

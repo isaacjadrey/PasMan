@@ -66,10 +66,11 @@ class UserViewModel @Inject constructor(private val repository: UserRepository) 
 
                 userResponse.collect { user ->
                     if (user == null) {
-                        stateListener?.onError("No login credentials found. It seems you have not created a login password")
+                        stateListener?.onError("Wrong password, it seems you don't have a login " +
+                                "password")
                         return@collect
                     } else {
-                        stateListener?.onSuccess("Login Credential validated with ${user.password}")
+                        stateListener?.onSuccess("Login credential verified,SUCCESS!")
                         return@collect
                     }
                 }
