@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,6 +21,7 @@ import com.codingwithjadrey.pasman.util.searchItems
 import com.codingwithjadrey.pasman.util.swipeToDeleteItem
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
+import java.util.concurrent.Executor
 import javax.inject.Inject
 
 /**
@@ -52,6 +55,9 @@ class PasswordListFragment : Fragment() {
     private val binding get() = _binding!!
     private val passwordViewModel: PasViewModel by viewModels()
     private val adapter: PasswordAdapter by lazy { PasswordAdapter() }
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     @Inject
     lateinit var alertHelper: AlertHelper
@@ -116,8 +122,7 @@ class PasswordListFragment : Fragment() {
                     }
                     R.id.action_delete_all -> {
                         alertHelper.createAlertToDelete(getString(R.string.delete_all_passwords)) {
-                            passwordViewModel.deleteAllPasswords()
-                            makeToast(requireContext(), getString(R.string.all_passwords_deleted))
+                            confirmToDelete()
                         }
                         true
                     }
@@ -129,6 +134,35 @@ class PasswordListFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun confirmToDelete() {
+        executor = ContextCompat.getMainExecutor(requireContext())
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    makeToast(requireContext(), "Failed to delete: $errString")
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    passwordViewModel.deleteAllPasswords()
+                    makeToast(requireContext(), getString(R.string.all_passwords_deleted))
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    makeToast(requireContext(), "Authentication Failed, can't delete passwords")
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Authenticate with fingerprint")
+            .setSubtitle("There is no going back after this!")
+            .setNegativeButtonText("Cancel")
+            .build()
+        biometricPrompt.authenticate(promptInfo)
     }
 
     /** lists the items from the database into the recycler view */
