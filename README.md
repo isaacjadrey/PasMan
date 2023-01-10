@@ -22,14 +22,14 @@
 ## Getting Started
 - Download or fork the repository
 - Open project in android studio and run
-- Authenicate using phone fingerprint credential
+- Authenticate using phone fingerprint credential
 
 ## Interest Work:
 - The future interest is on working on the following (among other updates) :-
 
   **Encrypting passwords when created**
   
-  **Decrypting the enecrypted passsword to view**
+  **Decrypting the encrypted password to view**
  
   **Encrypting the database**
   
