@@ -13,8 +13,9 @@
 </div>
 
 ## Features
-- Built in Kotlin
+- Built with Kotlin
 - Create new passwords
+- Password generator app
 - Manage existing passwords
 - Authenticate to access passwords
 - Create app login password
@@ -34,6 +35,50 @@
   **Encrypting the database**
   
   * Interested parties are welcome to work on these updates.
+  
+ ## Sample app
+ <h3 align="center">Dark Theme</h3>
+ <table>
+ <tr>
+ <td>AuthScreen </td>
+ <td>Home no items</td>
+ <td>Home</td>
+ <td>Add Password</td>
+ <td>Update/Details</td>
+ <td>Password Generator</td>
+ <td>Settings</td>
+ </tr>
+ <tr>
+ <td><img src="assets/authscreendark.jpg"></td>
+ <td><img src="assets/homeemptyitemdark.jpg"></td>
+ <td><img src="assets/homedark.jpg"></td>
+ <td><img src="assets/addpassworddark.jpg"></td>
+ <td><img src="assets/updatedark.jpg"></td>
+ <td><img src="assets/generatepassworddark.jpg"></td>
+ <td><img src="assets/settingsdark.jpg"></td>
+ </tr>
+ 
+ <table>
+ <h3 align="center">Light Theme</h3>
+ <tr>
+ <td>AuthScreen </td>
+ <td>Home no items</td>
+ <td>Home</td>
+ <td>Add Password</td>
+ <td>Update/Details</td>
+ <td>Password Generator</td>
+ <td>Settings</td>
+ </tr>
+ <tr>
+ <td><img src="assets/authscreenlight.jpg"></td>
+ <td><img src="assets/homeemptyitemlight.jpg"></td>
+ <td><img src="assets/homelight.jpg"></td>
+ <td><img src="assets/addpasswordlight.jpg"></td>
+ <td><img src="assets/updatelight.jpg"></td>
+ <td><img src="assets/generatepasswordlight.jpg"></td>
+ <td><img src="assets/settingslight.jpg"></td>
+ </tr>
+ </table>
 
 
 License
